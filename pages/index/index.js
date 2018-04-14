@@ -6,14 +6,86 @@ Page({
    */
   data: {
     longitude:0,
-    latitude:0
+    latitude:0,
+    markers: [
+      {
+        id: 1,
+        latitude: 31.22114,
+        longitude: 121.54804,
+        name: '世纪公园',
+        iconPath:"/images/marker3.png",
+        callout: {
+          content: "    外滩十八号饭店，\n 米其林星级餐厅，优惠活动\n 特色菜品等您来赏！",
+          color: "#424242",
+          fontSize: "12",
+          borderRadius: "5",
+          bgColor: "#ffffff",
+          padding: "10px",
+          display: "BYCLICK" ,
+          textAlign:"center"
+        }
+      },
+      {
+        id: 2,
+        latitude: 31.22114,
+        longitude: 121.54004,
+        name: '东方明珠',
+        iconPath: "/images/marker3.png",
+      },
+      {
+        id: 3,
+        latitude: 31.22114,
+        longitude: 121.54014,
+        name: '银联园区',
+        iconPath: "/images/marker3.png",
+      }, {
+        id: 4,
+        latitude: 31.21714,
+        longitude: 121.54804,
+        name: 'T.I.T 创意园',
+        iconPath: "/images/marker3.png",
+      }
+    ],
+    polyline: [{
+      points: [
+        {
+          latitude: 31.22114,
+          longitude: 121.54804,
+        },
+        {
+          latitude: 31.22114,
+          longitude: 121.54004,
+        },
+        {
+          latitude: 31.22114,
+          longitude: 121.54014,
+        }, 
+        {
+          latitude: 31.21714,
+          longitude: 121.54804,
+        }
+      ],
+      color: "#228B22",
+      width: 6,
+      arrowLine:true
+    }]
   },
+
+  //点击标记
+  markertap(e) {
+    console.log(e.markerId);
+    
+  },
+
+  //点击控件时触发
   bindcontroltap: function(e) {
     switch(e.controlId) {
       case 1:
+        //移到当前位置
         this.movetoCenter();
         break;
       case 2:
+         //照相记录
          if(this.timer){
             wx.navigateBack({
                delta: 1
@@ -46,11 +118,13 @@ Page({
          }
          break;
       case 3:
+         //我的
          wx.navigateTo({
             url: '../my/index',
          })
          break;
       case 4:
+         //反馈页面
          wx.navigateTo({
             url: '../warn/index',
          })
@@ -64,68 +138,76 @@ Page({
    */
   onLoad: function (options) {
      this.timer = options.timer;
-    wx.getLocation({
+     wx.getLocation({
       success: (res)=> {
         this.setData({
           longitude : res.longitude,
           latitude : res.latitude
-        })
+        });
+        console.log(res.longitude);
+        console.log(res.latitude)
       },
-    })
-    wx.getSystemInfo({  
+     })
+     wx.getSystemInfo({  
       success: (res)=> {
         this.setData({
-          controls: [{
-            id : 1,
-            iconPath : "/images/location.png",
-            position : {
-              width : 50,
-              height : 50,
-              left : 20,
-              top : res.windowHeight - 80
-            },
-            clickable : true
-          },{
-            id : 2,
-            iconPath : "/images/use.png",
-            position : {
-              width : 100,
-              left : res.windowWidth/2 - 50,
-              top : res.windowHeight - 120
-            },
-            clickable : true
-          },{
-            id: 3,
-            iconPath: "/images/avatar.png",
-            position: {
-              width: 70,
-              height: 70,
-              left: res.screenWidth - 100,
-              top: res.windowHeight - 100
-            },
-            clickable: true
-          },{
-            id: 4,
-            iconPath: "/images/warn.png",
-            position: {
-              width: 60,
-              height: 60,
-              left: res.screenWidth - 91,
-              top: res.windowHeight - 175
-            },
-            clickable: true
-          },{
-            id: 5,
-            iconPath: "/images/marker.png",
-            position: {
-              width: 20,
-              left: res.windowWidth / 2 - 10,
-              top: res.windowHeight / 2 - 30
+          //控件列表
+          controls: [
+            {
+              //获取当前定位
+              id : 1,
+              iconPath : "/images/location1.png",
+              position : {
+                width : 30,
+                height : 30,
+                left : 20,
+                top : res.windowHeight - 65
+              },
+              clickable : true
+            },{
+              //照相记录
+              id : 2,
+              iconPath : "/images/camera.png",
+              position : {
+                width : 50,
+                left : res.windowWidth/2 - 28,
+                top : res.windowHeight - 80
+              },
+              clickable : true
+            },{
+              //我的页面
+              id: 3,
+              iconPath: "/images/avatar1.png",
+              position: {
+                width: 30,
+                height: 30,
+                left: res.screenWidth - 60,
+                top: res.windowHeight - 68
+              },
+              clickable: true
+            },{
+              //反馈意见
+              id: 4,
+              iconPath: "/images/warn1.png",
+              position: {
+                width: 30,
+                height: 30,
+                left: 20,
+                top: 20
+              },
+              clickable: true
+            },{
+              id: 5,
+              iconPath: "/images/mylocation.png",
+              position: {
+                width: 30,
+                left: res.windowWidth / 2 - 10,
+                top: res.windowHeight / 2 - 30
             }
           }]
         })
       },
-    }) 
+     }) 
   },
 
   /**

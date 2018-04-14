@@ -6,14 +6,15 @@
      "pages/my/index",
      "pages/warn/index",
      "pages/billing/index",  
-     "pages/scanResult/index"
+     "pages/scanResult/index",
+     "pages/tenants/index"
     
     
   ],
   "window": {
-    "navigationBarBackgroundColor": "#b9dd08",
+    "navigationBarBackgroundColor": "#3399CC",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "共享单车",
+    "navigationBarTitleText": "渣打信用卡",
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": false

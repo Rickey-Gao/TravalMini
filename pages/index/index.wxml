@@ -1,4 +1,5 @@
 <!--pages/index/index.wxml-->
 <view class="container">
-  <map id="map" latitude="{{latitude}}" longitude="{{longitude}}"       show-location controls="{{controls}}" scale="17" bindcontroltap="bindcontroltap"/>
+  <map id="map" latitude="{{latitude}}" longitude="{{longitude}}"       show-location controls="{{controls}}" scale="17" bindcontroltap="bindcontroltap" markers="{{markers}}"
+  bindmarkertap="markertap" polyline="{{polyline}}"/>
 </view>
