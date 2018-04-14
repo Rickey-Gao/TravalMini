@@ -10,12 +10,12 @@ Page({
     markers: [
       {
         id: 1,
-        latitude: 31.22114,
-        longitude: 121.54804,
-        name: '世纪公园',
+        latitude: 31.2341053138,
+        longitude: 121.6653442383,
+        name: '中国银联',
         iconPath:"/images/marker3.png",
         callout: {
-          content: "    外滩十八号饭店，\n 米其林星级餐厅，优惠活动\n 特色菜品等您来赏！",
+          content: "    中国银联，\n 旅行起点，美妙开始的地方",
           color: "#424242",
           fontSize: "12",
           borderRadius: "5",
@@ -27,42 +27,52 @@ Page({
       },
       {
         id: 2,
-        latitude: 31.22114,
-        longitude: 121.54004,
-        name: '东方明珠',
+        latitude: 31.1393664108,
+        longitude: 121.6667175293,
+        name: '上海迪士尼乐园',
         iconPath: "/images/marker3.png",
+        callout: {
+          content: "    上海迪士尼乐园，\n 观大千世界游客流量旺 \n 赏自然和谐生灵接如此",
+          color: "#424242",
+          fontSize: "12",
+          borderRadius: "5",
+          bgColor: "#ffffff",
+          padding: "10px",
+          display: "BYCLICK",
+          textAlign: "center"
+        }
       },
       {
         id: 3,
-        latitude: 31.22114,
-        longitude: 121.54014,
-        name: '银联园区',
+        latitude: 31.2147100098,
+        longitude: 121.5533351898,
+        name: '上海世纪公园',
         iconPath: "/images/marker3.png",
       }, {
         id: 4,
-        latitude: 31.21714,
-        longitude: 121.54804,
-        name: 'T.I.T 创意园',
+        latitude: 31.2391507432,
+        longitude: 121.4998626709,
+        name: '上海东方明珠',
         iconPath: "/images/marker3.png",
       }
     ],
     polyline: [{
       points: [
         {
-          latitude: 31.22114,
-          longitude: 121.54804,
+          latitude: 31.2341053138,
+          longitude: 121.6653442383,
         },
         {
-          latitude: 31.22114,
-          longitude: 121.54004,
+          latitude: 31.1393664108,
+          longitude: 121.6667175293,
         },
         {
-          latitude: 31.22114,
-          longitude: 121.54014,
+          latitude: 31.2147100098,
+          longitude: 121.5533351898,
         }, 
         {
-          latitude: 31.21714,
-          longitude: 121.54804,
+          latitude: 31.2391507432,
+          longitude: 121.4998626709,
         }
       ],
       color: "#228B22",
@@ -120,7 +130,7 @@ Page({
       case 3:
          //我的
          wx.navigateTo({
-            url: '../my/index',
+            url: '../picture/picture',
          })
          break;
       case 4:
@@ -170,6 +180,7 @@ Page({
               iconPath : "/images/camera.png",
               position : {
                 width : 50,
+                height: 50,
                 left : res.windowWidth/2 - 28,
                 top : res.windowHeight - 80
               },
@@ -201,6 +212,7 @@ Page({
               iconPath: "/images/mylocation.png",
               position: {
                 width: 30,
+                height: 30,
                 left: res.windowWidth / 2 - 10,
                 top: res.windowHeight / 2 - 30
             }

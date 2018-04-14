@@ -7,7 +7,8 @@
      "pages/warn/index",
      "pages/billing/index",  
      "pages/scanResult/index",
-     "pages/tenants/index"
+     "pages/tenants/index",
+      "pages/picture/picture"
     
     
   ],
