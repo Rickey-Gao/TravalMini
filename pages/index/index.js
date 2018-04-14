@@ -1,4 +1,4 @@
-// pages/index/index.js
+var common = require('../../utils/common.js')
 Page({
 
   /**
@@ -7,147 +7,44 @@ Page({
   data: {
     longitude:0,
     latitude:0,
-    markers: [
-      {
-        id: 1,
-        latitude: 31.2341053138,
-        longitude: 121.6653442383,
-        name: '中国银联',
-        iconPath:"/images/marker3.png",
-        callout: {
-          content: "    中国银联，\n 旅行起点，美妙开始的地方",
-          color: "#424242",
-          fontSize: "12",
-          borderRadius: "5",
-          bgColor: "#ffffff",
-          padding: "10px",
-          display: "BYCLICK" ,
-          textAlign:"center"
+    markers: '',
+    polyline: 
+      [
+        //连线数组，可以定义n个线
+        {
+          points: [
+          {
+            latitude: 31.2341053138,
+            longitude: 121.6653442383,
+          },
+          {
+            latitude: 31.1393664108,
+            longitude: 121.6667175293,
+          },
+          {
+            latitude: 31.2147100098,
+            longitude: 121.5533351898,
+          }, 
+          {
+            latitude: 31.2391507432,
+            longitude: 121.4998626709,
+          }
+          ],
+          color: "#228B22",
+          width: 6,
+          arrowLine:true
         }
-      },
-      {
-        id: 2,
-        latitude: 31.1393664108,
-        longitude: 121.6667175293,
-        name: '上海迪士尼乐园',
-        iconPath: "/images/marker3.png",
-        callout: {
-          content: "    上海迪士尼乐园，\n 观大千世界游客流量旺 \n 赏自然和谐生灵接如此",
-          color: "#424242",
-          fontSize: "12",
-          borderRadius: "5",
-          bgColor: "#ffffff",
-          padding: "10px",
-          display: "BYCLICK",
-          textAlign: "center"
-        }
-      },
-      {
-        id: 3,
-        latitude: 31.2147100098,
-        longitude: 121.5533351898,
-        name: '上海世纪公园',
-        iconPath: "/images/marker3.png",
-      }, {
-        id: 4,
-        latitude: 31.2391507432,
-        longitude: 121.4998626709,
-        name: '上海东方明珠',
-        iconPath: "/images/marker3.png",
-      }
-    ],
-    polyline: [{
-      points: [
-        {
-          latitude: 31.2341053138,
-          longitude: 121.6653442383,
-        },
-        {
-          latitude: 31.1393664108,
-          longitude: 121.6667175293,
-        },
-        {
-          latitude: 31.2147100098,
-          longitude: 121.5533351898,
-        }, 
-        {
-          latitude: 31.2391507432,
-          longitude: 121.4998626709,
-        }
-      ],
-      color: "#228B22",
-      width: 6,
-      arrowLine:true
-    }]
+      ]
   },
-
-  //点击标记
-  markertap(e) {
-    console.log(e.markerId);
-    
-  },
-
-  //点击控件时触发
-  bindcontroltap: function(e) {
-    switch(e.controlId) {
-      case 1:
-        //移到当前位置
-        this.movetoCenter();
-        break;
-      case 2:
-         //照相记录
-         if(this.timer){
-            wx.navigateBack({
-               delta: 1
-            })
-         }else{
-            wx.scanCode({
-               success: () => {
-                  wx.showLoading({
-                     title: '正在获取密码',
-                  })
-                  wx.request({
-                     url: 'https://www.easy-mock.com/mock/5963172d9adc231f357c8ab1/ofo/getname',
-
-                     success: (res) => {
-                        console.log(res);
-                        wx.hideLoading();
-                        wx.redirectTo({
-                           url: '../scanResult/index?password=' + res.data.data.password + '&number=' + res.data.data.number,
-                           success: () => {
-                              wx.showToast({
-                                 title: '获取密码成功',
-                                 duration: 1000
-                              })
-                           }
-                        })
-                     }
-                  })
-               }
-            })
-         }
-         break;
-      case 3:
-         //我的
-         wx.navigateTo({
-            url: '../picture/picture',
-         })
-         break;
-      case 4:
-         //反馈页面
-         wx.navigateTo({
-            url: '../warn/index',
-         })
-         break;
-         
-     }
-   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-     this.timer = options.timer;
+     var that = this;
+     that.setData({
+       markers: common.markers
+     })
      wx.getLocation({
       success: (res)=> {
         this.setData({
@@ -158,7 +55,7 @@ Page({
         console.log(res.latitude)
       },
      })
-     wx.getSystemInfo({  
+     wx.getSystemInfo({ 
       success: (res)=> {
         this.setData({
           //控件列表
@@ -181,10 +78,10 @@ Page({
               position : {
                 width : 50,
                 height: 50,
-                left : res.windowWidth/2 - 28,
+                left : res.windowWidth/2 - 25,
                 top : res.windowHeight - 80
               },
-              clickable : true
+              clickable : true   
             },{
               //我的页面
               id: 3,
@@ -273,5 +170,53 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+
+  //点击标记
+  markertap(e) {
+    console.log(e.markeId);
+  },
+
+  //点击标记的气泡
+  bindcallouttap(e) {
+    console.log("bindcallouttap ,id :  " + e.markerId);
+  },
+
+  //点击控件时触发
+  bindcontroltap: function (e) {
+    switch (e.controlId) {
+      case 1:
+        //移到当前位置
+        this.movetoCenter();
+        break;
+      case 2:
+        //照相记录
+        wx.chooseImage({
+          count: 1, // 默认9
+          // 可以指定是原图还是压缩图，默认二者都有
+          sizeType: ['original', 'compressed'],
+          // 可以指定来源是相册还是相机，默认二者都有
+          sourceType: ['album', 'camera'],
+          // 返回选定照片的本地文件路径列表，tempFilePath可作为img标签的src属性显示图片
+          success: function (res) {
+            var tempFilePaths = res.tempFilePaths
+          }
+        })
+        break;
+      case 3:
+        //我的
+        wx.navigateTo({
+          url: '../picture/picture',
+        })
+        break;
+      case 4:
+        //反馈页面
+        wx.navigateTo({
+          url: '../warn/index',
+        })
+        break;
+
+    }
   }
 })

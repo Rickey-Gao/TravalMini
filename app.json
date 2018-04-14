@@ -13,8 +13,8 @@
     
   ],
   "window": {
-    "navigationBarBackgroundColor": "#3399CC",
-    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#1C1C1C",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "渣打信用卡",
     "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
